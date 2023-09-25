@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Financial Data</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+<body>
+
+
+    <!-- Revenue --> 
+    
+    <h2> Revenue </h2>
+    <table class="table table-striped table-sm">
+        <thead>
+          <tr>
+            {% for header in table_headers %}
+              <th scope="col">{{header}}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+            {% for row in Revenue_rows %}
+              <tr>
+                {% for cell in row %}
+                  <td>{{cell}}</td>
+                {% endfor %}
+              </tr>
+            {% endfor %}
+  
+        </tbody>
+      </table>
+      <canvas id="lineChart1" width="900" height="400"></canvas>
+
+        <!-- Gross Profit -->
+      <h2> Gross Profit </h2>
+    <table class="table table-striped table-sm">
+        <thead>
+          <tr>
+            {% for header in table_headers %}
+              <th scope="col">{{header}}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+            {% for row in GrossProfit_rows %}
+              <tr>
+                {% for cell in row %}
+                  <td>{{cell}}</td>
+                {% endfor %}
+                {% for date in datez %}
+                  <td>{{date}}</td>
+                {% endfor %}
+              </tr>
+            {% endfor %}
+  
+        </tbody>
+      </table>
+      <canvas id="lineChart2" width="900" height="400"></canvas>
+      <!-- Net Income Loss -->
+
+      <h2> NetIncomeLoss </h2>
+    <table class="table table-striped table-sm">
+        <thead>
+          <tr>
+            {% for header in table_headers %}
+              <th scope="col">{{header}}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+            {% for row in NetIncomeLoss_rows %}
+              <tr>
+                {% for cell in row %}
+                  <td>{{cell}}</td>
+                {% endfor %} 
+              </tr>
+            {% endfor %}
+  
+        </tbody>
+      </table>
+      <canvas id="lineChart3" width="900" height="400"></canvas>
+
+
+
+
+
+    <script>
+      // Revenue Chart
+      var ctx1 = document.getElementById('lineChart1').getContext('2d');
+      var lineChart1 = new Chart(ctx1,{
+        type: 'line',
+        data: {
+          labels: {{ Revenue_labels | safe }},
+          datasets: [{
+            label: 'Revenue (in billion dollars))',
+            data: {{ Revenue_values | safe }},
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1,
+            lineTension: 0.1,
+          }]
+        },
+        options: {
+          responsive: false
+        }
+      });
+
+      // Gross Profit Chart
+      var ctx2 = document.getElementById('lineChart2').getContext('2d');
+      var lineChart2 = new Chart(ctx2,{
+        type: 'line',
+        data: {
+          labels: {{ GrossProfit_labels | safe }},
+          datasets: [{
+            label: 'Gross Profit (in billion dollars))',
+            data: {{ GrossProfit_values | safe }},
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1,
+            lineTension: 0.1,
+          }]
+        },
+        options: {
+          responsive: false
+        }
+      });
+
+      // Net Income Loss Chart
+      var ctx3 = document.getElementById('lineChart3').getContext('2d');
+      var lineChart3 = new Chart(ctx3,{
+        type: 'line',
+        data: {
+          labels: {{ NetIncomeLoss_labels | safe }},
+          datasets: [{
+            label: 'Net Income Loss (in billion dollars))',
+            data: {{ NetIncomeLoss_values | safe }},
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1,
+            lineTension: 0.1,
+          }]
+        },
+        options: {
+          responsive: false
+        }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</body>
+</html>
